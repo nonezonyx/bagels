@@ -18,12 +18,18 @@ Wrong input - Amount of digits is not equal.
             ans.append("Pico")
     return (["Bagels"],ans)[len(ans)>0]
 
+def get_answer(length:int)->str:
+    correct_answer=list("0123456789")
+    random.shuffle(correct_answer)
+    return "".join(correct_answer[:length])
+
 def play(num_length: int=3, guesses: int=10) -> bool:
     """play(num_length: int=3, guesses: int=10) -> bool:
 main game function.
 returns True if player won and False otherwise.
 """
-    correct_answer=random.randint(10**(num_length-1),10**(num_length)-1)
+
+    correct_answer=get_answer(num_length)
     guess_num=1
     while  guess_num <= guesses:
         guess_answer=guess(input(f"Guess #{guess_num}: "),correct_answer)
@@ -33,7 +39,7 @@ returns True if player won and False otherwise.
             print("You got it!")
             return True
         else:
-            print(*guess_answer)
+            print(*sorted(guess_answer))
             guess_num+=1
     print(f"You've lost! Answer is {correct_answer}.")
     return False
